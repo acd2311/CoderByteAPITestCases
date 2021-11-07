@@ -21,7 +21,7 @@ namespace CoderByteAPITestCases
             skuObject.price = price;
 
             //Insert sku record
-            string insertedSku = APIMethods.InsertSKU(skuObject);
+            string insertedSku = APIMethods.UpsertSKU(skuObject);
 
             //Verify inserted sku record
             var apiResponse = JsonConvert.DeserializeObject<SKU>(insertedSku);
@@ -47,7 +47,7 @@ namespace CoderByteAPITestCases
             {
 
 
-                string insertedSku = APIMethods.InsertSKU(skuObject);
+                string insertedSku = APIMethods.UpsertSKU(skuObject);
 
                 //Verify inserted sku record
                 var apiResponse = JsonConvert.DeserializeObject<SKU>(insertedSku);

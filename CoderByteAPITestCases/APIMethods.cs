@@ -9,7 +9,7 @@ namespace CoderByteAPITestCases
     {
         private const string url = "https://1ryu4whyek.execute-api.us-west-2.amazonaws.com/dev/skus";
 
-        public static string GetAPIResponse()
+        public static string ListSKU()
         {
             string result;
             var request = (HttpWebRequest)WebRequest.Create(url);
@@ -31,7 +31,7 @@ namespace CoderByteAPITestCases
             }
         }
 
-        public static string GetAPIResponse(string skuID)
+        public static string GetSKU(string skuID)
         {
             string result;
             string urlWithSKUID = url + "/" + skuID;
@@ -53,7 +53,7 @@ namespace CoderByteAPITestCases
             }
         }
 
-        public static string InsertSKU(SKU newSku)
+        public static string UpsertSKU(SKU newSku)
         {
             string strVerify;
             string insert = JsonConvert.SerializeObject(newSku);
@@ -72,6 +72,35 @@ namespace CoderByteAPITestCases
             }
 
             return strVerify;
+        }
+
+        public static bool DeleteSKU(string skuID)
+        {
+            string urlWithSKUID = url + "/" + skuID;
+            var request = (HttpWebRequest)WebRequest.Create(urlWithSKUID);
+            request.Method = "DELETE";
+            request.ContentType = "application/json";
+            try
+            {
+                var response = (HttpWebResponse)request.GetResponse();
+                if (response.StatusCode.ToString().Equals("OK"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (WebException exception)
+            {
+                var response = (HttpWebResponse)exception.Response;
+                if (response.StatusCode.ToString().Equals("Forbidden"))
+                    return false;
+                else
+                    throw new Exception("Response code is not Forbidden for invalid sku ID '" + skuID + "'. Received response code = " + response.StatusCode.ToString());
+
+            }
         }
     }
 }

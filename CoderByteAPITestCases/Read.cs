@@ -13,7 +13,7 @@ namespace CoderByteAPITestCases
         [Test]
         public void VerifyGetAllRecords()
         {
-            string result = APIMethods.GetAPIResponse();
+            string result = APIMethods.ListSKU();
             List<SKU> skus = JsonConvert.DeserializeObject<List<SKU>>(result);
             Assert.IsNotEmpty(skus, "Received zero records when trying to list records");
          }
@@ -21,12 +21,12 @@ namespace CoderByteAPITestCases
         [Test]
         public void VerifyGetRecordByExistingFirstID_Valid()
         {
-            string result = APIMethods.GetAPIResponse();
+            string result = APIMethods.ListSKU();
         
             List<SKU> skus = JsonConvert.DeserializeObject<List<SKU>>(result);
             string inputSku = skus[0].sku;
 
-            result = APIMethods.GetAPIResponse(inputSku);
+            result = APIMethods.GetSKU(inputSku);
             var strSku = JObject.Parse(result)["Item"].ToString();
 
             SKU skuResponseDetails = JsonConvert.DeserializeObject<SKU>(strSku);
@@ -39,12 +39,12 @@ namespace CoderByteAPITestCases
         [Test]
         public void VerifyGetRecordByExistingLastID_Valid()
         {
-            string result = APIMethods.GetAPIResponse();
+            string result = APIMethods.ListSKU();
 
             List<SKU> skus = JsonConvert.DeserializeObject<List<SKU>>(result);
             string inputSku = skus[skus.Count-1].sku;
 
-            result = APIMethods.GetAPIResponse(inputSku);
+            result = APIMethods.GetSKU(inputSku);
             var strSku = JObject.Parse(result)["Item"].ToString();
 
             SKU skuResponseDetails = JsonConvert.DeserializeObject<SKU>(strSku);
@@ -57,7 +57,7 @@ namespace CoderByteAPITestCases
         [Test]
         public void VerifyGetRecord_InValidID()
         {
-            string result = APIMethods.GetAPIResponse("InvalidSKUID");
+            string result = APIMethods.GetSKU("InvalidSKUID");
             var strSku = JObject.Parse(result)["Item"];
             Assert.IsNull(strSku,"API returned valid record for Invalid sku id. Record returned: " + strSku);
         }
