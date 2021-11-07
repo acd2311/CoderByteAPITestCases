@@ -52,5 +52,26 @@ namespace CoderByteAPITestCases
                 throw new Exception("Response code is not OK for sku ID '" + skuID + "'. Received response code = " + response.StatusCode.ToString());
             }
         }
+
+        public static string InsertSKU(SKU newSku)
+        {
+            string strVerify;
+            string insert = JsonConvert.SerializeObject(newSku);
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                streamWriter.Write(insert);
+            }
+            var response = (HttpWebResponse)request.GetResponse();
+            Stream stream = response.GetResponseStream();
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                strVerify = reader.ReadToEnd();
+            }
+
+            return strVerify;
+        }
     }
 }
