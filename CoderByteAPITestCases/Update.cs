@@ -78,7 +78,7 @@ namespace CoderByteAPITestCases
             result = APIMethods.GetSKU(inputSku);
             var strSku = JObject.Parse(result)["Item"].ToString();
 
-            //Update sku record with _Updated suffix
+            //Update sku record with updated price
             SKU skuResponseDetails = JsonConvert.DeserializeObject<SKU>(strSku);
 
             skuResponseDetails.price += "-2.99";

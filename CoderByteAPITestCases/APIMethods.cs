@@ -19,7 +19,7 @@ namespace CoderByteAPITestCases
             request.Method = "GET";
             var response = (HttpWebResponse)request.GetResponse();
 
-            if (response.StatusCode.ToString() == "OK")
+            if ((int)response.StatusCode == 200) //OK
             {
                 Stream stream = response.GetResponseStream();
                 using (StreamReader reader = new StreamReader(stream))
@@ -45,7 +45,7 @@ namespace CoderByteAPITestCases
             var request = (HttpWebRequest)WebRequest.Create(urlWithSKUID);
             request.Method = "GET";
             var response = (HttpWebResponse)request.GetResponse();
-            if (response.StatusCode.ToString() == "OK")
+            if ((int)response.StatusCode == 200) //OK
             {
                 Stream stream = response.GetResponseStream();
                 using (StreamReader reader = new StreamReader(stream))
@@ -99,7 +99,7 @@ namespace CoderByteAPITestCases
             try
             {
                 var response = (HttpWebResponse)request.GetResponse();
-                if (response.StatusCode.ToString().Equals("OK"))
+                if ((int)response.StatusCode == 200) //OK
                 {
                     return true;
                 }
@@ -111,7 +111,7 @@ namespace CoderByteAPITestCases
             catch (WebException exception)
             {
                 var response = (HttpWebResponse)exception.Response;
-                if (response.StatusCode.ToString().Equals("Forbidden"))
+                if ((int)response.StatusCode == 403) //"Forbidden
                     return false;
                 else
                     throw new Exception("Response code is not Forbidden for invalid sku ID '" + skuID + "'. Received response code = " + response.StatusCode.ToString());
