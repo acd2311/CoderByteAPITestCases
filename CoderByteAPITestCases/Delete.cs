@@ -51,17 +51,15 @@ namespace CoderByteAPITestCases
         public void VerifyDeleteSKU_InvalidIDWithSpecialChars()
         {
 
-            string invalidSkuID = "InvalidSku" + DateTime.Now.ToString();
+            string invalidSkuID = "InvalidSku-:!@";
             // Delete sku record
             bool isDeleted = APIMethods.DeleteSKU(invalidSkuID);
 
-            // Got response from Team as this is expected behaviour:
-            // When I try to DELETE with SKU ID containing special characters, I am getting Forbidden status. Is this as expected?
-
             if (isDeleted)
-                Assert.Fail("Record is deleted for invalid sku ID " + invalidSkuID);
-            else
                 Assert.Pass();
+            else
+                Assert.Fail("Expected API response is OK. Instead, received Forbidden for invalid sku ID " + invalidSkuID);
+
         }
 
         [Test]
