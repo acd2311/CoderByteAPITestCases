@@ -9,6 +9,9 @@ namespace CoderByteAPITestCases
     {
         private const string url = "https://1ryu4whyek.execute-api.us-west-2.amazonaws.com/dev/skus";
 
+        /// <summary>This method gets the string of SKU objects from the API Response.
+        /// It throws exception if response is not 'OK'</summary>
+        /// <returns>A string representing an API response.</returns>
         public static string ListSKU()
         {
             string result;
@@ -31,6 +34,10 @@ namespace CoderByteAPITestCases
             }
         }
 
+        /// <summary>This method gets the string of SKU object from the API Response for 
+        ///    (<paramref name="skuID"/>).</summary>
+        /// <param name="skuID">SKU ID</param>
+        /// <returns>A string representing an API response for the given (<paramref name="skuID"/></returns>
         public static string GetSKU(string skuID)
         {
             string result;
@@ -53,6 +60,10 @@ namespace CoderByteAPITestCases
             }
         }
 
+        /// <summary>This method performs POST operation. It upserts (inserts or updates) the string of SKU object from the API Response for 
+        ///    (<paramref name="skuObj"/>). </summary>
+        /// <param name="skuObj">SKU object with the parameter values</param>
+        /// <returns>A string representing an API response for the newly created or updated (<paramref name="skuObj"/>)</returns>
         public static string UpsertSKU(SKU newSku)
         {
             string strVerify;
@@ -74,6 +85,11 @@ namespace CoderByteAPITestCases
             return strVerify;
         }
 
+        /// <summary>This method performs DELETE operation on the 
+        ///    (<paramref name="skuID"/>,<paramref name="yor"/>).
+        /// It throws exception if response is not 'Forbidden' for invalid SKU ID. </summary>
+        /// <param name="skuID">SKU ID</param>
+        /// <returns>A 'true' value if DELETE operation is successful. A 'false' value in case it is unsuccessful.</returns>
         public static bool DeleteSKU(string skuID)
         {
             string urlWithSKUID = url + "/" + skuID;
