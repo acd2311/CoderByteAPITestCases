@@ -31,14 +31,50 @@ namespace CoderByteAPITestCases
         }
 
         [Test]
-        public void VerifyDeleteSKU_InvalidID()
+        public void VerifyDeleteSKU_InvalidIDWithoutSpecialChars()
         {
 
             string invalidSkuID = "InvalidSku";
-            // TODO: This test will fail currently. Handle success/failure based on response from team about API design.
-
             // Delete sku record
             bool isDeleted = APIMethods.DeleteSKU(invalidSkuID);
+
+            // Got response from Team as this is expected behaviour:
+            // "When DELETE is called with non existing sku, API response returns OK. Is this as expected? Or should it be Forbidden?"
+
+            if (isDeleted)
+                Assert.Pass();
+            else
+                Assert.Fail();
+        }
+
+        [Test]
+        public void VerifyDeleteSKU_InvalidIDWithSpecialChars()
+        {
+
+            string invalidSkuID = "InvalidSku" + DateTime.Now.ToString();
+            // Delete sku record
+            bool isDeleted = APIMethods.DeleteSKU(invalidSkuID);
+
+            // Got response from Team as this is expected behaviour:
+            // When I try to DELETE with SKU ID containing special characters, I am getting Forbidden status. Is this as expected?
+
+            if (isDeleted)
+                Assert.Fail("Record is deleted for invalid sku ID " + invalidSkuID);
+            else
+                Assert.Pass();
+        }
+
+        [Test]
+        public void VerifyDeleteSKU_WithNullValue()
+        {
+
+            string invalidSkuID = null;
+            // Delete sku record
+            bool isDeleted = APIMethods.DeleteSKU(invalidSkuID);
+
+            // Got response from Team as this is expected behaviour:
+            // "When I do not provide SKU ID for DELETE, I get Forbidden status with message ‘Missing Authentication Token’
+            // rather than missing sku or similar message. Is this as expected?"
 
             if (isDeleted)
                 Assert.Fail("Record is deleted for invalid sku ID " + invalidSkuID);

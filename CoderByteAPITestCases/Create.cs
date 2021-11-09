@@ -45,8 +45,6 @@ namespace CoderByteAPITestCases
             //Insert sku record
             try
             {
-
-
                 string insertedSku = APIMethods.UpsertSKU(skuObject);
 
                 //Verify inserted sku record
@@ -72,12 +70,11 @@ namespace CoderByteAPITestCases
                 }
                 else
                     Assert.Fail("Unexpected exception while inserting null sku record. Received response code = " + response.StatusCode.ToString());
-
-
             }
         }
 
         //TODO:more cases with invalid entries
+        //> Haven't got answer for question regarding invalid entries (What are the invalid values for SKU ID, description and price. I want to verify POST for invalid data entry)
 
 
     }

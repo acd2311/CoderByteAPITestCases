@@ -5,8 +5,10 @@ using Newtonsoft.Json;
 
 namespace CoderByteAPITestCases
 {
+     
     public class APIMethods
     {
+        
         private const string url = "https://1ryu4whyek.execute-api.us-west-2.amazonaws.com/dev/skus";
 
         /// <summary>This method gets the string of SKU objects from the API Response.
@@ -100,13 +102,10 @@ namespace CoderByteAPITestCases
             {
                 var response = (HttpWebResponse)request.GetResponse();
                 if ((int)response.StatusCode == 200) //OK
-                {
                     return true;
-                }
                 else
-                {
                     return false;
-                }
+                
             }
             catch (WebException exception)
             {
